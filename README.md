@@ -51,3 +51,4 @@ The project uses the following plugins:
 @semantic-release/git: Commits updated files like CHANGELOG.md and package.json.
 @semantic-release/github: Creates GitHub releases.
 ``
+test:
