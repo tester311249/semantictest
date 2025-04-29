@@ -52,3 +52,5 @@ The project uses the following plugins:
 @semantic-release/github: Creates GitHub releases.
 ``
 test:
+
+test2:
