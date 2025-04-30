@@ -5,6 +5,13 @@
 
 * test ([fb68361](https://github.com/tester311249/semantictest/commit/fb683618e324d8696f63fa5569220ce7b607c584))
 
+# [0.3.0](https://github.com/tester311249/semantictest/compare/v0.2.0...v0.3.0) (2025-04-30)
+
+
+### Features
+
+* test ([fb68361](https://github.com/tester311249/semantictest/commit/fb683618e324d8696f63fa5569220ce7b607c584))
+
 # [0.2.0](https://github.com/tester311249/semantictest/compare/v0.1.0...v0.2.0) (2025-04-29)
 
 
