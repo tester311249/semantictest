@@ -52,7 +52,4 @@ The project uses the following plugins:
 @semantic-release/github: Creates GitHub releases.
 ``
 test:
-
-test2:
-
-test3:
+test 3:
