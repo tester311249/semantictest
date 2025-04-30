@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/tester311249/semantictest/compare/v0.3.0...v0.4.0) (2025-04-30)
+
+
+### Features
+
+* Updating README.md BREAKING CHANGE: ReTest ([da86126](https://github.com/tester311249/semantictest/commit/da861264d923eba6118f04082ec2600032caadb8))
+
 # [0.3.0](https://github.com/tester311249/semantictest/compare/v0.2.0...v0.3.0) (2025-04-30)
 
 
