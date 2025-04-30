@@ -54,3 +54,5 @@ The project uses the following plugins:
 test:
 
 test2:
+
+test3:
