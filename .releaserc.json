@@ -7,9 +7,13 @@
       "releaseRules": [
         { "type": "fix", "release": "patch" },
         { "type": "feat", "release": "minor"},
+        {"type": "feat", "breaking": true, "release": "major"},
         {"type": "BREAKING CHANGE", "release": "major"}
       ],
-      "preset": "conventionalcommits"
+      "preset": "conventionalcommits",
+      "parserOpts": {
+        "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
+      }
     }
     ],
     "@semantic-release/release-notes-generator",
