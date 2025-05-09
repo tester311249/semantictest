@@ -3,6 +3,24 @@
 
 ### Features
 
+* test ([2cc9b1e](https://github.com/tester311249/semantictest/commit/2cc9b1e42377244c9b28a42ae34a612e17bbe984))
+* test ([97827f2](https://github.com/tester311249/semantictest/commit/97827f26769c2b16f48d55d76fe52ed68fad82f2))
+* This is a test. ([268e89f](https://github.com/tester311249/semantictest/commit/268e89ff987166f3e248ccdc03d93ae68fcef6bd))
+* Update Package ([66316e7](https://github.com/tester311249/semantictest/commit/66316e7347d769e018b4d6b3fd7078814e797f64))
+* Updating README.md BREAKING CHANGE: ReTest ([da86126](https://github.com/tester311249/semantictest/commit/da861264d923eba6118f04082ec2600032caadb8))
+
+
+### BREAKING CHANGES
+
+* REtest
+* Test
+* Retest.
+
+# [0.4.0](https://github.com/tester311249/semantictest/compare/v0.3.0...v0.4.0) (2025-05-09)
+
+
+### Features
+
 * test ([97827f2](https://github.com/tester311249/semantictest/commit/97827f26769c2b16f48d55d76fe52ed68fad82f2))
 * This is a test. ([268e89f](https://github.com/tester311249/semantictest/commit/268e89ff987166f3e248ccdc03d93ae68fcef6bd))
 * Update Package ([66316e7](https://github.com/tester311249/semantictest/commit/66316e7347d769e018b4d6b3fd7078814e797f64))
