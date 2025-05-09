@@ -1,3 +1,13 @@
+# [1.0.0](https://github.com/tester311249/semantictest/compare/v0.6.0...v1.0.0) (2025-05-09)
+
+
+* chore!: drop support for Node 6 ([062e4a6](https://github.com/tester311249/semantictest/commit/062e4a67edf604861460298ca36d86d2755f2856))
+
+
+### BREAKING CHANGES
+
+* use JavaScript features not available in Node 6.
+
 # [0.6.0](https://github.com/tester311249/semantictest/compare/v0.5.0...v0.6.0) (2025-05-09)
 
 # [0.5.0](https://github.com/tester311249/semantictest/compare/v0.4.0...v0.5.0) (2025-05-09)
