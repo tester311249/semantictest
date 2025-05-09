@@ -1,3 +1,15 @@
+# [0.5.0](https://github.com/tester311249/semantictest/compare/v0.4.0...v0.5.0) (2025-05-09)
+
+
+### Features
+
+* Retest ([b4c5d26](https://github.com/tester311249/semantictest/commit/b4c5d26ab28c92e14ee23842e99d368c6ce8184f))
+
+
+### BREAKING CHANGES
+
+* `extend` config.
+
 # [0.4.0](https://github.com/tester311249/semantictest/compare/v0.3.0...v0.4.0) (2025-05-09)
 
 
