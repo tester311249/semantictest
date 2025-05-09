@@ -59,5 +59,7 @@ test 6:
 test 7: Add changes
 test8: do test
 test again test again test again
+feat: test
+BREAKING CHANGE: test didnt work
 
 https://www.conventionalcommits.org/en/v1.0.0/#specification
