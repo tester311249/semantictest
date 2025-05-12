@@ -61,5 +61,24 @@ test8: do test
 test again test again test again
 feat: test
 BREAKING CHANGE: test didnt work
+BREAKING CHANGE: test worked and now pre-commit added in .git/hooks
+
+``
+Reset Local Branch to Remote: Fetch the latest changes and reset your local branch to match the remote branch.
+
+
+git fetch origin
+git reset --hard origin/main
+Apply Your Changes: Reapply your changes to the updated branch. If your changes are stashed, you can pop them:
+
+
+git stash pop
+Recommit and Push: Recommit your changes and push them to the remote.
+
+
+git add .
+git commit -m "Your commit message"
+git push origin main
+``
 
 https://www.conventionalcommits.org/en/v1.0.0/#specification
