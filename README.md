@@ -85,5 +85,6 @@ git commit -m "Your commit message"
 7f308976-ff47-4721-936f-19930013eee1fwe8Q~TUlQR~knoFDhvpxCuue2yADrfT2-o8Mazd
 git push origin main
 ``
-
+    "subscriptionId":  "5dc4c528-7c65-4b86-92dd-fb5a0c93c9c0",
+    "tenantId":  "ae31ca61-1a87-4594-bf9b-2cce41fc613f",
 https://www.conventionalcommits.org/en/v1.0.0/#specification
