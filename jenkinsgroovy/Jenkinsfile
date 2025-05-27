@@ -1,0 +1,48 @@
+
+import org.jenkinsci.plugins.workflow.cps.CpsScript
+import org.jenkinsci.plugins.workflow.libs.Library
+
+stages{
+stage('Prepare Environment') {
+    steps {
+    executeStage({
+            script {
+                // Set up environment variables
+              String project = env.PROJECT ?: 'mb4'
+              String envType = env.ENV_TYPE ?: 'dev'
+              String branchName = env.BRANCH_NAME
+
+              // show tools versions
+              helmUtils.version()
+              kubectlUtils.version('--client')
+
+              //configure tools
+                helmUtils.addNexusRepo()
+                azureCliUtils.loginAzureServices(project, envType, branchName, [AKS])
+                kubectlUtils.setNamespace(env.NAMESPACE)
+
+                // checkout
+                gitUtils.doCheckout()
+
+                // set values specific to 'bootstarp' or 'value stream' pipelines
+
+                if (params.UNINSTALL_BEFORE_INSTALL == null){
+                 String valuesFilePrefix = env.VALUES_FILE_PREFIX ?: "${env.VALUES_FILE_PREFIX}.":"${azureCliUtils.clusterName}."
+                 String valuesFileNAme = "${valuesFilePrefix}values.yaml"
+                 env.releaseName = "${azureCliUtils.clusterName}-bootstrap"
+                 env.valuesToApply= "-f ${valuesFileNAme}"
+            } else {
+                 String envValuesFilePrefix = env.ENV_TYPE ? "-${env.ENV_TYPE}": ""
+                 String envValuesFileName = "values${envValuesFilePrefix}.yaml"
+                 env.rleaseName = env.RELEASE_NAME ?: env.NAMESPACE
+                 env.valuesToApply= "-f values.yaml"
+                 if (fileExists(envValuesFileName)) {
+                     env.valuesToApply += " -f ${envValuesFileName}"
+                 }
+
+                }
+            }
+    })
+
+    }
+}
