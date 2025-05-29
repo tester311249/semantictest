@@ -1,3 +1,22 @@
+# [3.0.0](https://github.com/tester311249/semantictest/compare/v2.0.0...v3.0.0) (2025-05-29)
+
+
+### Features
+
+* retest ([894a0e7](https://github.com/tester311249/semantictest/commit/894a0e75bc89503874b02829243b00219b728758))
+* retest ([890424e](https://github.com/tester311249/semantictest/commit/890424e41a485ddc832527e49612c5b7f51781a0))
+* Retest ([704f3a2](https://github.com/tester311249/semantictest/commit/704f3a263a5d98f1a42756ce4db9e737ee17591f))
+* test ([95040da](https://github.com/tester311249/semantictest/commit/95040da19eb68fb7e66fef281ab83b23532337d9))
+* test ([b08d735](https://github.com/tester311249/semantictest/commit/b08d7351488370a2912472cda399a5c959f2fea0))
+
+
+### BREAKING CHANGES
+
+* Retest the fix
+* REtest
+* Retest
+* retest
+
 # [3.0.0](https://github.com/tester311249/semantictest/compare/v2.0.0...v3.0.0) (2025-05-27)
 
 
