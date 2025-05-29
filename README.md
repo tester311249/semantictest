@@ -81,3 +81,22 @@ Recommit and Push: Recommit your changes and push them to the remote.
 git add .
 git commit -m "Your commit message"
 https://www.conventionalcommits.org/en/v1.0.0/#specification
+
+
+- name: Set values for bootstrap or value stream
+  set_fact:
+    values_file_prefix: "{{ (UNINSTALL_BEFORE_INSTALL is not defined) | ternary((VALUES_FILE_PREFIX | default(cluster_name ~ '.')), '') }}"
+    values_file_name: "{{ (UNINSTALL_BEFORE_INSTALL is not defined) | ternary(values_file_prefix ~ 'values.yaml', 'values' ~ (ENV_TYPE | default('')) ~ '.yaml') }}"
+    release_name: "{{ (UNINSTALL_BEFORE_INSTALL is not defined) | ternary(cluster_name ~ '-bootstrap', (RELEASE_NAME | default(NAMESPACE))) }}"
+    values_to_apply: >-
+      {{ (UNINSTALL_BEFORE_INSTALL is not defined)
+        | ternary('-f ' ~ values_file_name,
+                  '-f values.yaml' ~ (lookup('file', values_file_name, errors='ignore') is not none | ternary(' -f ' ~ values_file_name, '')))
+      }}
+  vars:
+    cluster_name: "{{ azureCliUtils_clusterName }}"
+    NAMESPACE: "{{ env_Namespace }}"
+    VALUES_FILE_PREFIX: "{{ env_VALUES_FILE_PREFIX }}"
+    ENV_TYPE: "{{ env_ENV_TYPE }}"
+    RELEASE_NAME: "{{ env_RELEASE_NAME }}"
+    UNINSTALL_BEFORE_INSTALL: "{{ params_UNINSTALL_BEFORE_INSTALL }}"
