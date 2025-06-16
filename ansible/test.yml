@@ -1,0 +1,45 @@
+- name: Set values_file_prefix for bootstrap or value stream
+  set_fact:
+    values_file_prefix: "{{ (UNINSTALL_BEFORE_INSTALL is none or not UNINSTALL_BEFORE_INSTALL) | ternary((VALUES_FILE_PREFIX | default(cluster_name ~ '.')), '') }}"
+  vars:
+    cluster_name: "{{ azureCliUtils_clusterName }}"
+    VALUES_FILE_PREFIX: "{{ env_VALUES_FILE_PREFIX }}"
+    UNINSTALL_BEFORE_INSTALL: "{{ params_UNINSTALL_BEFORE_INSTALL }}"
+
+- name: Set remaining values for bootstrap or value stream
+  set_fact:
+    values_file_name: "{{ (UNINSTALL_BEFORE_INSTALL is none or not UNINSTALL_BEFORE_INSTALL) | ternary(values_file_prefix ~ 'values.yaml', 'values' ~ (ENV_TYPE | default('')) ~ '.yaml') }}"
+    release_name: "{{ (UNINSTALL_BEFORE_INSTALL is none or not UNINSTALL_BEFORE_INSTALL) | ternary(cluster_name ~ '-bootstrap', (RELEASE_NAME | default(NAMESPACE))) }}"
+    values_to_apply: >-
+      {{ (UNINSTALL_BEFORE_INSTALL is none or not UNINSTALL_BEFORE_INSTALL)
+        | ternary('-f ' ~ values_file_name,
+                  '-f values.yaml' ~ (lookup('file', values_file_name, errors='ignore') is not none | ternary(' -f ' ~ values_file_name, '')))
+      }}
+  vars:
+    cluster_name: "{{ azureCliUtils_clusterName }}"
+    NAMESPACE: "{{ env_Namespace }}"
+    ENV_TYPE: "{{ env_ENV_TYPE }}"
+    RELEASE_NAME: "{{ env_RELEASE_NAME }}"
+    UNINSTALL_BEFORE_INSTALL: "{{ params_UNINSTALL_BEFORE_INSTALL }}"
+
+- name: Delete PVC for release
+  vars:
+    release_name: "{{ release_name | default('my-release') }}"
+    pvc_name: "out-dir-{{ release_name }}"
+  ansible.builtin.shell: kubectl delete pvc {{ pvc_name }}
+  register: delete_pvc_result
+  ignore_errors: true
+  when: pvc_check.rc == 0
+
+- name: Check if PVC exists
+  ansible.builtin.shell: |
+    kubectl get pvc {{ pvc_name }} --ignore-not-found
+  register: pvc_check
+  failed_when: false
+
+- name: Delete PVC if it exists
+  ansible.builtin.shell: |
+    kubectl delete pvc {{ pvc_name }} --ignore-not-found --v=8
+  when: pvc_check.rc == 0
+  register: pvc_delete
+  failed_when: false

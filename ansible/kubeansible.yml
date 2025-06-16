@@ -1,0 +1,44 @@
+---
+- name: Uninstall Helm release and delete PVC in AKS
+  hosts: localhost
+  gather_facts: false
+  vars:
+    resource_group: "{{ aks_resource_group }}"
+    cluster_name: "{{ aks_cluster_name }}"
+    kubeconfig_path: "/tmp/aks_kubeconfig"
+    release_name: "{{ release_name | default('my-release') }}"
+    pvc_name: "out-dir-{{ release_name }}-pingaccess-admin-0"
+  tasks:
+    - name: Get AKS kubeconfig using Azure CLI
+      azure.azcollection.azure_cli:
+        command: >
+          az aks get-credentials
+          --resource-group {{ resource_group }}
+          --name {{ cluster_name }}
+          --file {{ kubeconfig_path }}
+          --overwrite-existing
+
+    - name: Uninstall Helm release
+      community.kubernetes.helm:
+        name: "{{ release_name }}"
+        state: absent
+        kubeconfig: "{{ kubeconfig_path }}"
+        wait: true
+      ignore_errors: true
+
+    - name: Check if PVC exists
+      community.kubernetes.k8s_info:
+        api_version: v1
+        kind: PersistentVolumeClaim
+        name: "{{ pvc_name }}"
+        kubeconfig: "{{ kubeconfig_path }}"
+      register: pvc_info
+
+    - name: Delete PVC if it exists
+      community.kubernetes.k8s:
+        api_version: v1
+        kind: PersistentVolumeClaim
+        name: "{{ pvc_name }}"
+        state: absent
+        kubeconfig: "{{ kubeconfig_path }}"
+      when: pvc_info.resources | length > 0

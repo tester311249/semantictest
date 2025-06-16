@@ -1,0 +1,36 @@
+stage("Uninstall the release") {
+when {
+expression {UNINSTALL_BEFORE_INSTALL} }
+steps { executeStage({
+script {
+String pvcName = "out-dir-${releaseName}-pingaccess-admin-0"
+sh """helm uninstall ${releaseName} --ignore-not-found"""
+// Delete the PVC if it exists
+if(kubectlUtils.checkPvcExistence(pvcName)) {
+    kubectlUtils.deletePvc(pvcName,'--ignore-not-found --v=8')
+  }
+}) }
+}
+
+// Check if Persistent Volume Claim Exists and delete it if it does
+
+Boolean checkPvcExistence(String pvcName) {
+Boolean returnValue
+script.echo("Check PVC '${pvcName}' existence")
+Integer exitCode =
+sh(script: "kubectl get pvc ${pvcName} --ignore-not-found &>/dev/null",
+returnStatus: true
+)
+if (exitCode == 0) {
+    returnValue = true
+} else if (exitCode == 1) {
+    returnValue = false
+}
+return returnValue
+}
+// Delete Persistent Volume Claim
+void deletePvc(String pvcName, String options = '') {
+script.sh(
+script: "kubectl delete pvc ${pvcName} ${options}"
+)
+}
