@@ -1,0 +1,21 @@
+- name: Create annotation JSON
+  ansible.builtin.shell: |
+    set -e
+    ENV_LIST="{{ VALID_ENV_LIST }}"
+    ANNOTATION_MAP="{}"
+    for ENV in $(echo $ENV_LIST | tr ',' ' '); do
+      # Get Key Vault names (keyAnnotations) for the environment
+      KEY_ANNOTATIONS=$(your_command_to_get_keyvault_names "$ENV")
+      for KEY_ANNOTATION in $(echo $KEY_ANNOTATIONS | tr ';' ' '); do
+        KEY_ID=$(az keyvault secret show --vault-name "$KEY_ANNOTATION" --name "secret_username" --query value -o tsv)
+        KEY_VALUE=$(az keyvault secret show --vault-name "$KEY_ANNOTATION" --name "secret_password" --query value -o tsv)
+        PUB_KEY=$(echo "$KEY_ANNOTATION" | sed 's/-annotation$/-pub/')
+        ANNOTATION_MAP=$(echo $ANNOTATION_MAP | jq --arg k "$PUB_KEY" --arg id "$KEY_ID" --arg val "$KEY_VALUE" '. + {($k): {($id): $val}}')
+      done
+    done
+    echo $ANNOTATION_MAP > annotations.json
+  environment:
+    VALID_ENV_LIST: "{{ lookup('env', 'VALID_ENV_LIST') }}"
+  args:
+    executable: /bin/bash
+  register: annotation_json_result
